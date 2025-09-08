@@ -1,0 +1,41 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h1>Mi Intranet</h1>
+<section>
+  <h2>Subir/actualizar proyecto CAS</h2>
+  <form method="post" enctype="multipart/form-data" class="form">
+    {{ form.csrf_token }}
+    <label>Título {{ form.title(size=50) }}</label>
+    <label>Curso {{ form.course(size=20) }}</label>
+    <label>Año {{ form.year(size=10) }}</label>
+    <label>Descripción {{ form.description(rows=5, cols=60) }}</label>
+    <label>Evidencia PDF {{ form.evidence_pdf() }}</label>
+    <label>URL de Video {{ form.video_url(size=60) }}</label>
+    <label>Imágenes (máx 8) <input type="file" name="images" accept="image/*" multiple></label>
+    {{ form.submit(class_="btn") }}
+  </form>
+</section>
+
+<section>
+  <h2>Mis proyectos</h2>
+  <div class="cards">
+    {% for p in projects %}
+      <article class="card">
+        <h3>{{ p.title }}</h3>
+        <p class="muted">{{ p.course }} · {{ p.year }} · {% if p.approved %}Aprobado{% else %}Pendiente{% endif %}</p>
+        <p>{{ p.description }}</p>
+        {% if p.images %}
+          <div class="thumbs">
+            {% for img in p.images[:8] %}
+              <img src="{{ url_for('public.uploads', filename=img.filename) }}" alt="" class="thumb">
+            {% endfor %}
+          </div>
+        {% endif %}
+      </article>
+    {% else %}
+      <p>No has subido proyectos aún.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

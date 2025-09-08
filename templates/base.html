@@ -1,0 +1,64 @@
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portal CAS - Colegio Alemán de La Serena</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <script defer src="{{ url_for('static', filename='js/main.js') }}"></script>
+</head>
+<body>
+  <header class="navbar">
+    <div class="brand-wrap">
+      <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" />
+      <a class="brand" href="{{ url_for('public.home') }}">CAS IB</a>
+    </div>
+    <nav>
+      <a href="{{ url_for('public.home') }}">Inicio</a>
+      <a href="{{ url_for('public.noticias') }}">Noticias</a>
+      <a href="{{ url_for('public.galeria') }}">Galería</a>
+      <a href="{{ url_for('public.contacto') }}">Contacto</a>
+      {% if current_user.is_authenticated %}
+        <a href="{{ url_for('intranet.dashboard') }}">Intranet</a>
+        {% if current_user.role in ['admin','teacher'] %}
+          <a href="{{ url_for('admin.panel') }}">Admin</a>
+          {% if current_user.role == 'admin' %}<a href="{{ url_for('admin.usuarios_admin') }}">Usuarios</a>{% endif %}
+        {% endif %}
+        <a href="{{ url_for('auth.logout') }}">Salir</a>
+      {% else %}
+        <a href="{{ url_for('auth.login') }}">Ingresar</a>
+        <a class="btn" href="{{ url_for('auth.register') }}">Registrarse</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <main class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-area">
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <div id="cookie-banner" class="cookie-banner" style="display:none;">
+    <p>Usamos cookies esenciales para mejorar tu experiencia. <a href="#">Saber más</a></p>
+    <button class="btn small" onclick="acceptCookies()">Aceptar</button>
+  </div>
+
+  <footer class="footer">
+    <p>Desarrollado por Agustín Albert (Colegio Alemán de La Serena)</p>
+    <p>
+      <a href="mailto:secretaria@dsls.cl">secretaria@dsls.cl</a> ·
+      <a href="mailto:rgalleguillos@dsls.cl">rgalleguillos@dsls.cl</a> ·
+      <a href="mailto:agustinalbertaguilera@gmail.com">agustinalbertaguilera@gmail.com</a>
+    </p>
+  </footer>
+</body>
+</html>

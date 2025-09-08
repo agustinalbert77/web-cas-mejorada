@@ -1,0 +1,16 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h1>Contacto</h1>
+<form method="post" class="form">
+  {{ form.csrf_token }}
+  <label>Nombre {{ form.name(size=40) }}</label>
+  <label>Email {{ form.email(size=40) }}</label>
+  <label>Mensaje {{ form.message(rows=6, cols=60) }}</label>
+  {{ form.recaptcha }}
+  {{ form.submit(class_="btn") }}
+</form>
+{% if sent %}
+<p class="success">Tu mensaje fue procesado.</p>
+{% endif %}
+{% endblock %}

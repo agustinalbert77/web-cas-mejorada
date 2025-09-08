@@ -1,0 +1,26 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h1>Noticias</h1>
+<form class="filters" method="get">
+  <label>Tipo:
+    <select name="tipo" onchange="this.form.submit()">
+      <option value="">Todas</option>
+      {% for t in ['General','Servicio','Creatividad','Acción'] %}
+      <option value="{{t}}" {% if type_filter==t %}selected{% endif %}>{{t}}</option>
+      {% endfor %}
+    </select>
+  </label>
+</form>
+<div class="cards">
+  {% for n in news %}
+    <article class="card">
+      <h3>{{ n.title }}</h3>
+      <p class="muted">{{ n.date.strftime('%d/%m/%Y') }} · {{ n.activity_type }}</p>
+      <div class="ql-content">{{ bleach.clean(n.content, tags=tags, attributes=attrs, strip=True)|safe }}</div>
+    </article>
+  {% else %}
+    <p>No hay noticias.</p>
+  {% endfor %}
+</div>
+{% endblock %}

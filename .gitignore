@@ -1,0 +1,15 @@
+﻿# Entorno virtual
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Variables locales y DB
+.env
+*.db
+uploads/
+
+# Backups
+backups/

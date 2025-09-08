@@ -1,0 +1,25 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero">
+  <h1>Proyecto CAS - IB</h1>
+  <p>Creatividad, Actividad y Servicio con identidad del Colegio Alemán de La Serena.</p>
+</section>
+
+<section>
+  <h2>Últimas noticias</h2>
+  {% if latest_news %}
+    <div class="cards">
+      {% for n in latest_news %}
+        <article class="card">
+          <h3>{{ n.title }}</h3>
+          <p class="muted">{{ n.date.strftime('%d/%m/%Y') }} · {{ n.activity_type }}</p>
+          <div class="ql-content">{{ bleach.clean(n.content, tags=tags, attributes=attrs, strip=True)|safe }}</div>
+        </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No hay noticias aún.</p>
+  {% endif %}
+</section>
+{% endblock %}

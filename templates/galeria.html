@@ -1,0 +1,23 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h1>Galería</h1>
+<div class="gallery">
+  {% for it in items %}
+  <figure class="gallery-item" onclick="openModal('{{ url_for('public.uploads', filename=it.filename) }}','{{ it.title|e }}','{{ it.description|e }}')">
+    <img src="{{ url_for('public.uploads', filename=it.filename) }}" alt="{{ it.title }}">
+    <figcaption>{{ it.title }}</figcaption>
+  </figure>
+  {% else %}
+    <p>No hay imágenes en la galería.</p>
+  {% endfor %}
+</div>
+
+<div id="imgModal" class="modal" onclick="closeModal(event)">
+  <div class="modal-content">
+    <img id="modalImg" src="" alt="">
+    <h3 id="modalTitle"></h3>
+    <p id="modalDesc"></p>
+  </div>
+</div>
+{% endblock %}

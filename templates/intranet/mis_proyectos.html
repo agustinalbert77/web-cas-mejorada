@@ -1,0 +1,16 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h1>Mis proyectos</h1>
+<div class="cards">
+  {% for p in projects %}
+    <article class="card">
+      <h3>{{ p.title }}</h3>
+      <p class="muted">{{ p.course }} · {{ p.year }} · {% if p.approved %}Aprobado{% else %}Pendiente{% endif %}</p>
+      <p>{{ p.description }}</p>
+    </article>
+  {% else %}
+    <p>No has subido proyectos aún.</p>
+  {% endfor %}
+</div>
+{% endblock %}

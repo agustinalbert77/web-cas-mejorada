@@ -1,0 +1,12 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h1>Ingresar</h1>
+<form method="post" class="form">
+  {{ form.csrf_token }}
+  <label>Email {{ form.email(size=40) }}</label>
+  <label>Contraseña {{ form.password(size=40) }}</label>
+  {{ form.submit(class_="btn") }}
+</form>
+<p>¿No tienes cuenta? <a href="{{ url_for('auth.register') }}">Regístrate</a></p>
+{% endblock %}

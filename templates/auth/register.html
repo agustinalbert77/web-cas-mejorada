@@ -1,0 +1,13 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h1>Registro</h1>
+<form method="post" class="form">
+  {{ form.csrf_token }}
+  <label>Nombre {{ form.name(size=40) }}</label>
+  <label>Email {{ form.email(size=40) }}</label>
+  <label>Contraseña {{ form.password(size=40) }}</label>
+  {{ form.recaptcha }}
+  {{ form.submit(class_="btn") }}
+</form>
+{% endblock %}

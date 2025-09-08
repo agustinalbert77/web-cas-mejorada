@@ -1,0 +1,28 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h1>Galería (Admin)</h1>
+<form method="post" enctype="multipart/form-data" class="form">
+  {{ form.csrf_token }}
+  <label>Título {{ form.title(size=60) }}</label>
+  <label>Descripción {{ form.description(rows=4, cols=60) }}</label>
+  <label>Imagen {{ form.image() }}</label>
+  {{ form.submit(class_="btn") }}
+</form>
+<h2>Imágenes</h2>
+<div class="gallery">
+  {% for it in items %}
+  <figure class="gallery-item">
+    <img src="{{ url_for('public.uploads', filename=it.filename) }}" alt="{{ it.title }}">
+    <figcaption>
+      <strong>{{ it.title }}</strong>
+      <form method="post" action="{{ url_for('admin.eliminar_galeria', item_id=it.id) }}">
+        <button class="btn danger small">Eliminar</button>
+      </form>
+    </figcaption>
+  </figure>
+  {% else %}
+    <p>No hay imágenes aún.</p>
+  {% endfor %}
+</div>
+{% endblock %}
